@@ -5,7 +5,9 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const createTodoDatabase = async (e: FormData) => {
+ 
   const todoText = e.get("todoText")?.toString();
+  console.log(todoText);
 
   if (!todoText) return;
 
@@ -20,6 +22,7 @@ export const createTodoDatabase = async (e: FormData) => {
     console.log(error);
   }
   revalidateTag("TodoLists");
+  
 };
 
 export const printTodoDatabase = async () => {
@@ -30,20 +33,3 @@ export const printTodoDatabase = async () => {
     console.log(error);
   }
 };
-
-// createTodoDatabase(e: FormData)
-//   .catch((e) => {
-//     console.error(e.message);
-//   })
-//   .finally(async () => {
-//     await prisma.$disconnect();
-//   });
-
-// {
-//     method: "POST",
-//     body: JSON.stringify(newProduct),
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   });
-//   revalidateTag("products");
