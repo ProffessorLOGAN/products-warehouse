@@ -3,3 +3,8 @@ export interface Product {
   product: string;
   price: string;
 }
+
+export interface TodoList {
+  id?: number;
+  todoText: string;
+}
