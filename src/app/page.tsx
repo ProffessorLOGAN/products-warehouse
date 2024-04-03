@@ -1,24 +1,19 @@
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
+import { Product } from "../../typings";
+import { addProductToDatabase } from "@/actions/serverActions";
 
-export interface Product {
-  id?: number;
-  product: string;
-  price: string;
-}
 export default async function Home() {
   const res = await fetch(
     "https://660c22163a0766e85dbd7d9e.mockapi.io/products",
     {
       cache: "no-cache",
+      next: {
+        tags: ["products"],
+      },
     }
   );
   const products: Product[] = await res.json();
-
-  const addProductToDatabase = async (e: FormData) => {
-const product = e.get("product")?.toString();
-const price = e.get("price")?.toString();
-  }
 
   return (
     <main>
@@ -26,16 +21,21 @@ const price = e.get("price")?.toString();
         {" "}
         Product Warehouse
       </h1>
-      <form action={addProductToDatabase} className="flex flex-col gap-5 max-w-xl mx-auto p-5">
+      <form
+        action={addProductToDatabase}
+        className="flex flex-col gap-5 max-w-xl mx-auto p-5"
+      >
         <input
           className="border border-gray-300 p-2 rounded-sm"
           type="text"
           placeholder="Add Product Name"
+          name="product"
         />
         <input
           className="border border-gray-300 p-2 rounded-sm"
           type="text"
           placeholder="Add Product Price"
+          name="price"
         />
 
         <button className="border bg-blue-500 text-white p-2 rounded-md">
