@@ -1,11 +1,10 @@
 "use server";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { TodoList } from "../../typings";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const createTodoDatabase = async (e: FormData) => {
- 
   const todoText = e.get("todoText")?.toString();
   console.log(todoText);
 
@@ -22,14 +21,21 @@ export const createTodoDatabase = async (e: FormData) => {
     console.log(error);
   }
   revalidateTag("TodoLists");
-  
 };
 
 export const printTodoDatabase = async () => {
-  try {
-    const todoLists = await prisma.todoList.findMany();
-    console.log(todoLists);
-  } catch (error) {
-    console.log(error);
-  }
+  const todoList = await prisma.todoList.findMany();
+  // console.log(todoList);
+  return todoList;
+};
+
+export const deleteTodoDatabase = async (id: string) => {
+  const todoList = await prisma.todoList.delete({
+    where: {
+      id,
+    },
+  });
+  console.log(todoList);
+  revalidatePath('/todo');
+  return todoList;
 };

@@ -1,10 +1,10 @@
 export interface Product {
-  id?: number;
+  id?: string;
   product: string;
   price: string;
 }
 
 export interface TodoList {
-  id?: number;
+  id?: string;
   todoText: string;
 }

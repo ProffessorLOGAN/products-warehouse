@@ -1,29 +1,23 @@
-import React from 'react'
+import {  printTodoDatabase } from "@/actions/todoActions";
+import React from "react";
+import Delete from "./Delete";
 
-const TodoLists = () => {
+const TodoLists = async () => {
+  const Lists = await printTodoDatabase();
+
   return (
     <>
-    <div className="flex border border-gray-400 flex-wrap py-2 text-md justify-center gap-10 bg-white">
-       <p className='border px-4 border-gray-500'>Learn React.js </p>     
-       <button className='border px-4 border-gray-700'>Delete</button>
-      </div>
+      {Lists.map((List) => (
+        <div
+          key={List.id}
+          className="flex border border-gray-400 flex-wrap py-2 mb-1 text-md justify-center gap-10 bg-white shadow-2xl"
+        >
+          <p className="border px-4 border-gray-500">{List.todoText} </p>
+          <Delete id={List.id}  /> 
+        </div>
+      ))}
     </>
-  )
-}
+  );
+};
 
-export default TodoLists
-
-// {products.map((product) => (
-//     <Card
-//       key={product.id}
-//       className="flex flex-col bg-gray-100 shadow-2xl"
-//     >
-     
-//       <CardContent className="mx-auto">
-//         <p>₹ {product.price}</p>
-//       </CardContent>
-//       <CardFooter className="mx-auto">
-//         <p>{product.product}</p>
-//       </CardFooter>
-//     </Card>
-//   ))}
+export default TodoLists;
