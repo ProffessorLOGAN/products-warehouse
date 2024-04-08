@@ -5,6 +5,6 @@ export interface Product {
 }
 
 export interface TodoList {
-  id?: string;
+  id: string;
   todoText: string;
 }
